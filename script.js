@@ -1,7 +1,5 @@
-// Пример объектов (автомобили)
 let objects = [];
   
-  // Функция для отображения объектов на странице
   function renderObjects() {
     const container = document.getElementById('objects-container');
     container.innerHTML = '';
@@ -14,8 +12,8 @@ let objects = [];
             <div class="card-body">
               <h5 class="card-title">${object.name}</h5>
               <p class="card-text">${object.description}</p>
-              <button class="btn btn-primary" onclick="editObject(${object.id})">Edit</button>
-              <button class="btn btn-danger" onclick="deleteObject(${object.id})">Delete</button>
+              <button class="btn btn-primary" onclick="editObject(${object.id})">Изменить</button>
+              <button class="btn btn-danger" onclick="deleteObject(${object.id})">Удалить</button>
             </div>
           </div>
         </div>
@@ -23,8 +21,7 @@ let objects = [];
       container.innerHTML += card;
     });
   }
-  
-  // Функция для добавления нового объекта
+
   function addObject() {
     const nameInput = document.getElementById('name-input');
     const descriptionInput = document.getElementById('description-input');
@@ -38,16 +35,11 @@ let objects = [];
       const id = objects.length + 1;
       objects.push({ id, name, description, imageUrl });
       renderObjects();
-      // Очистка полей ввода после добавления
-      nameInput.value = '';
-      descriptionInput.value = '';
-      imageInput.value = '';
     } else {
-      alert("All fields are required!");
+      alert("Заполните все поля!");
     }
   }
   
-  // Функция для удаления объекта по ID
   function deleteObject(id) {
     const index = objects.findIndex(obj => obj.id === id);
     if (index !== -1) {
@@ -55,23 +47,23 @@ let objects = [];
       renderObjects();
     }
   }
-  
-  // Функция для изменения объекта по ID
-  // Функция для изменения объекта по ID
-function editObject(id) {
-    const index = objects.findIndex(obj => obj.id === id);
-    if (index !== -1) {
-      const nameInput = document.getElementById('name-input');
-      const descriptionInput = document.getElementById('description-input');
-      const imageInput = document.getElementById('image-input');
-  
-      nameInput.value = objects[index].name;
-      descriptionInput.value = objects[index].description;
-      imageInput.value = objects[index].imageUrl;
-  
-      // Обновление кнопки "Добавить" на "Сохранить" для редактирования
-      const addButton = document.getElementById('add-object-button');
-      addButton.innerHTML = 'Save';
-      addButton.setAttribute('onclick', `saveObject(${id})`);
+
+  function editObject(id) {
+    const nameInput = document.getElementById('name-input');
+    const descriptionInput = document.getElementById('description-input');
+    const imageInput = document.getElementById('image-input');
+    
+    const name = nameInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const imageUrl = imageInput.value.trim();
+    
+    if (name && description && imageUrl) {
+      const index = objects.findIndex(obj => obj.id === id);
+      if (index !== -1) {
+        objects[index] = { id, name, description, imageUrl };
+        renderObjects();
+      }
+    } else {
+      alert("Заполните все поля!");
     }
   }
